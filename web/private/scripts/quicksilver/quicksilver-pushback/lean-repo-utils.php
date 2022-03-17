@@ -218,6 +218,10 @@ function push_back($fullRepository, $workDir, $upstreamRepoWithCredentials, $bui
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository reset HEAD $buildMetadataFile bash_env.txt dev-master");
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository status");
 
+    print "Some ls (canonical and then full)\n";
+    passthru("ls -al $canonicalRepository");
+    passthru("ls -al $fullRepository");
+
     // TODO: Copy author, message and perhaps other attributes from the commit at the head of the full repository
     print "Git commit command\n";
     print "git --git-dir=$canonicalRepository/.git -C $fullRepository commit --no-edit --message=$comment --author=$author --date=$commit_date";
