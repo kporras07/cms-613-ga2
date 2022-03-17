@@ -220,11 +220,10 @@ function push_back($fullRepository, $workDir, $upstreamRepoWithCredentials, $bui
 
     // TODO: Copy author, message and perhaps other attributes from the commit at the head of the full repository
     print "Git commit command\n";
-    print "git --git-dir=$canonicalRepository/.git -C $fullRepository commit -q --no-edit --message=$comment --author=$author --date=$commit_date";
-    exec("git --git-dir=$canonicalRepository/.git -C $fullRepository commit -q --no-edit --message=$comment --author=$author --date=$commit_date", $output, $commitStatus);
+    print "git --git-dir=$canonicalRepository/.git -C $fullRepository commit --no-edit --message=$comment --author=$author --date=$commit_date";
+    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository commit --no-edit --message=$comment --author=$author --date=$commit_date", $commitStatus);
     print "Output:\n";
     print $commitStatus;
-    var_dump($output);
 
     // Get our .gitignore back
     passthru("git -C $fullRepository checkout -- .gitignore");
