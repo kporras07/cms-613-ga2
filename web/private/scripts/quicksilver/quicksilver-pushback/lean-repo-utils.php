@@ -204,12 +204,15 @@ function push_back($fullRepository, $workDir, $upstreamRepoWithCredentials, $bui
 
     print "::::::::::::::::: .gitignore :::::::::::::::::\n$gitignore_contents\n";
 
+    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository status");
     // Add our files and make our commit
     print "git add .\n";
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository add .", $status);
     if ($status != 0) {
         print "FAILED with $status\n";
     }
+    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository status");
+
     // We don't want to commit the build-metadata to the canonical repository.
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository reset HEAD $buildMetadataFile");
     // TODO: Copy author, message and perhaps other attributes from the commit at the head of the full repository
