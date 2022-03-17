@@ -211,10 +211,13 @@ function push_back($fullRepository, $workDir, $upstreamRepoWithCredentials, $bui
     if ($status != 0) {
         print "FAILED with $status\n";
     }
-    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository status");
+    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository diff --staged");
+
 
     // We don't want to commit the build-metadata to the canonical repository.
-    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository reset HEAD $buildMetadataFile");
+    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository reset HEAD $buildMetadataFile bash_env.txt dev-master");
+    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository status");
+
     // TODO: Copy author, message and perhaps other attributes from the commit at the head of the full repository
     print "Git commit command\n";
     print "git --git-dir=$canonicalRepository/.git -C $fullRepository commit -q --no-edit --message=$comment --author=$author --date=$commit_date";
