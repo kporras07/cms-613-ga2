@@ -227,13 +227,6 @@ function push_back($fullRepository, $workDir, $upstreamRepoWithCredentials, $bui
         passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository config user.email 'bot@getpantheon.com'");
     }
 
-    print "Remote show";
-    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository remote show");
-    passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository remote show origin");
-    // Ofuscate them a bit.
-    print "UPS WITH CREDENTIALS: " . str_replace(['gh', 'W'], ['tgfew', 'o'], $upstreamRepoWithCredentials) . "\n";
-
-
     // TODO: Copy author, message and perhaps other attributes from the commit at the head of the full repository
     print "Git commit command\n";
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository commit --no-edit --message=$comment --author=$author --date=$commit_date 2>&1", $commitStatus);
