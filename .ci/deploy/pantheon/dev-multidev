@@ -41,8 +41,10 @@ terminus -n env:clear-cache $TERMINUS_SITE.$TERMINUS_ENV
 # @todo add conditional to use GH_TOKEN instead of GITHUB_TOKEN if it exists.
 if [[ ! -z "$GH_TOKEN" ]]
 then
+  echo "GH TOKEN FOUND AND USED"
   terminus -n secrets:set "$TERMINUS_SITE.$TERMINUS_ENV" token "$GH_TOKEN" --file='.build-secrets/tokens.json' --clear --skip-if-empty
 else
+  echo "GH TOKEN NOT FOUND, USING GITHUB TOKEN"
   terminus -n secrets:set "$TERMINUS_SITE.$TERMINUS_ENV" token "$GITHUB_TOKEN" --file='.build-secrets/tokens.json' --clear --skip-if-empty
 fi
 
