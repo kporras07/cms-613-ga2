@@ -218,16 +218,18 @@ function push_back($fullRepository, $workDir, $upstreamRepoWithCredentials, $bui
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository reset HEAD $buildMetadataFile bash_env.txt dev-master");
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository status");
 
-    print "Some ls (canonical and then full)\n";
-    passthru("ls -al $canonicalRepository");
-    passthru("ls -al $fullRepository");
+    $userName = exec("git --git-dir=$canonicalRepository/.git -C $fullRepository config user.name");
+    if (empty($userName)) {
+        passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository config user.name 'Pantheon'");
+    }
+    $userEmail = exec("git --git-dir=$canonicalRepository/.git -C $fullRepository config user.email");
+    if (empty($userEmail)) {
+        passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository config user.email 'bot@getpantheon.com'");
+    }
 
     // TODO: Copy author, message and perhaps other attributes from the commit at the head of the full repository
     print "Git commit command\n";
-    print "git --git-dir=$canonicalRepository/.git -C $fullRepository commit --no-edit --message=$comment --author=$author --date=$commit_date";
     passthru("git --git-dir=$canonicalRepository/.git -C $fullRepository commit --no-edit --message=$comment --author=$author --date=$commit_date 2>&1", $commitStatus);
-    print "Output:\n";
-    print $commitStatus;
 
     // Get our .gitignore back
     passthru("git -C $fullRepository checkout -- .gitignore");
