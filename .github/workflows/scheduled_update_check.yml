@@ -16,7 +16,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
   TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
-  BASH_ENV: "$HOME/bash_env.txt"
+  BASH_ENV: "${{ github.workspace }}/bash_env.txt"
   CI_BRANCH: ${{ github.ref }}
   COMMIT_SHA: ${{ github.sha }}
   CI_BUILD_NUMBER: ${{ github.run_number }}
@@ -24,6 +24,7 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
+  WORKSPACE: ${{ github.workspace }}
 
 jobs:
   scheduled_update_check:
@@ -42,7 +43,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $HOME/bash_env.txt
+          path: $WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       # Set TERMINUS_ENV and related environment variables.

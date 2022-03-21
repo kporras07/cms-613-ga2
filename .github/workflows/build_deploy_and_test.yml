@@ -13,7 +13,7 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
   TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
   TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
-  BASH_ENV: "$HOME/bash_env.txt"
+  BASH_ENV: "${{ github.workspace }}/bash_env.txt"
   CI_BRANCH: ${{ github.ref }}
   COMMIT_SHA: ${{ github.sha }}
   CI_BUILD_NUMBER: ${{ github.run_number }}
@@ -21,7 +21,7 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
-
+  WORKSPACE: ${{ github.workspace }}
 
 jobs:
   configure_env_vars:
@@ -38,7 +38,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $HOME/bash_env.txt
+          path: $WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       # Set TERMINUS_ENV and related environment variables.
@@ -125,7 +125,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $HOME/bash_env.txt
+          path: $WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -201,7 +201,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $HOME/bash_env.txt
+          path: $WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -310,7 +310,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $HOME/bash_env.txt
+          path: $WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
