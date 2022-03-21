@@ -13,7 +13,7 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
   TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
   TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
-  BASH_ENV: "$RUNNER_TEMP/bash_env.txt"
+  BASH_ENV: "$GITHUB_WORKSPACE/bash_env.txt"
   CI_BRANCH: ${{ github.ref }}
   COMMIT_SHA: ${{ github.sha }}
   CI_BUILD_NUMBER: ${{ github.run_number }}
@@ -38,13 +38,14 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $RUNNER_TEMP/bash_env.txt
+          path: $GITHUB_WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       # Set TERMINUS_ENV and related environment variables.
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment
       - name: setup-environment-vars
         run: |
+          echo $GITHUB_WORKSPACE
           if [ "$CI_BRANCH" != "refs/heads/master" ]; then
             export PR_NUMBER=`curl -u "${GITHUB_OWNER}:${GITHUB_TOKEN}" \
               -H "Accept: application/vnd.github.groot-preview+json" \
@@ -125,7 +126,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $RUNNER_TEMP/bash_env.txt
+          path: $GITHUB_WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -201,7 +202,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $RUNNER_TEMP/bash_env.txt
+          path: $GITHUB_WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -310,7 +311,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: $RUNNER_TEMP/bash_env.txt
+          path: $GITHUB_WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
