@@ -16,7 +16,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
   TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
-  BASH_ENV: "./bash_env.txt"
+  BASH_ENV: "~/bash_env.txt"
   CI_BRANCH: ${{ github.ref }}
   COMMIT_SHA: ${{ github.sha }}
   CI_BUILD_NUMBER: ${{ github.run_number }}
@@ -42,7 +42,7 @@ jobs:
         env:
           cache-name: cache-bash-env
         with:
-          path: bash_env.txt
+          path: ~/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       # Set TERMINUS_ENV and related environment variables.
