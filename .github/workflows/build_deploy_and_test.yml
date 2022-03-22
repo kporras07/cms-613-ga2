@@ -13,7 +13,6 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
   TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
   TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
-  BASH_ENV: ${{ github.workspace }}/bash_env.txt
   CI_BRANCH: ${{ github.ref }}
   COMMIT_SHA: ${{ github.sha }}
   CI_BUILD_NUMBER: ${{ github.run_number }}
@@ -32,12 +31,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set bash_env env var
+        run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
+
       - name: Cache bash_env.txt
         uses: actions/cache@v2
         env:
           cache-name: cache-bash-env
         with:
-          path: ${{ github.workspace }}/bash_env.txt
+          path: ${{ env.BASH_ENV }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       - name: Setup tmate session
@@ -123,12 +125,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set bash_env env var
+        run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
+
       - name: Cache bash_env.txt
         uses: actions/cache@v2
         env:
           cache-name: cache-bash-env
         with:
-          path: ${{ github.workspace }}/bash_env.txt
+          path: ${{ env.BASH_ENV }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -199,12 +204,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set bash_env env var
+        run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
+
       - name: Cache bash_env.txt
         uses: actions/cache@v2
         env:
           cache-name: cache-bash-env
         with:
-          path: ${{ github.workspace }}/bash_env.txt
+          path: ${{ env.BASH_ENV }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -308,12 +316,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set bash_env env var
+        run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
+
       - name: Cache bash_env.txt
         uses: actions/cache@v2
         env:
           cache-name: cache-bash-env
         with:
-          path: ${{ github.workspace }}/bash_env.txt
+          path: ${{ env.BASH_ENV }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
