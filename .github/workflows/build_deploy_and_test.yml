@@ -41,6 +41,9 @@ jobs:
           path: $GITHUB_WORKSPACE/bash_env.txt
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       # Set TERMINUS_ENV and related environment variables.
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment
       - name: setup-environment-vars
