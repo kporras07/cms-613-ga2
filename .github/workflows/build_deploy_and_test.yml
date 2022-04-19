@@ -21,6 +21,7 @@ env:
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
 
+
 jobs:
   configure_env_vars:
     container:
@@ -46,7 +47,6 @@ jobs:
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment
       - name: setup-environment-vars
         run: |
-          echo $GITHUB_WORKSPACE
           if [ "$CI_BRANCH" != "refs/heads/master" ]; then
             export PR_NUMBER=`curl -u "${GITHUB_OWNER}:${GITHUB_TOKEN}" \
               -H "Accept: application/vnd.github.groot-preview+json" \
@@ -163,7 +163,7 @@ jobs:
           cache-name: cache-web
         with:
           path: ./web
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       - name: Cache drush folder
         uses: actions/cache@v2
@@ -242,7 +242,7 @@ jobs:
           cache-name: cache-web
         with:
           path: ./web
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       - name: Cache drush folder
         uses: actions/cache@v2
@@ -354,7 +354,7 @@ jobs:
           cache-name: cache-web
         with:
           path: ./web
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
 
       - name: Cache drush folder
         uses: actions/cache@v2
