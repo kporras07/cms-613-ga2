@@ -21,7 +21,6 @@ env:
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
   PR_NUMBER: ${{ github.event.number }}
-  CI_BRANCH: ${{ github.head_ref }}
   CI_PULL_REQUEST: ${{ github.event.pull_request._links.html.href }}
 
 
@@ -54,8 +53,8 @@ jobs:
       - name: setup-environment-vars
         run: |
           if [ "$CI_BRANCH" != "refs/heads/master" ]; then
+            export CI_BRANCH=$GITHUB_HEAD_REF
             export PR_NUMBER=${{ github.event.number }}
-            export CI_BRANCH=${{ github.head_ref }}
             export CI_PULL_REQUEST=${{ github.event.pull_request._links.html.href }}
           else
             export CI_BRANCH="master"
