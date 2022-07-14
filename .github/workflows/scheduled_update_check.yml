@@ -22,7 +22,6 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
-  WORKSPACE: ${{ github.workspace }}
 
 jobs:
   scheduled_update_check:
