@@ -305,9 +305,6 @@ jobs:
     if: ${{ github.ref != 'refs/heads/master' }}
     needs: [configure_env_vars, behat_test]
     steps:
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
