@@ -305,6 +305,9 @@ jobs:
     if: ${{ github.ref != 'refs/heads/master' }}
     needs: [configure_env_vars, behat_test]
     steps:
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Update git version
         run: |
           echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main" >> /etc/apt/sources.list
