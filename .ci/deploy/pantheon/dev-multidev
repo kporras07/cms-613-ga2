@@ -20,7 +20,7 @@ then
   terminus -n build:env:create "$TERMINUS_SITE.dev" "$TERMINUS_ENV" --yes
 else
   # Push to the dev environment
-  terminus -n build:env:push "$TERMINUS_SITE.dev" --yes
+  terminus -n build:env:push "$TERMINUS_SITE.dev" --yes --pr-id=$PR_NUMBER
 fi
 
 # Wake the environment to make sure the database is reachable.
