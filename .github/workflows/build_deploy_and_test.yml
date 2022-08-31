@@ -56,14 +56,14 @@ jobs:
               export PR_NUMBER=`curl -u "${GITHUB_OWNER}:${GITHUB_TOKEN}" \
                 -H "Accept: application/vnd.github.groot-preview+json" \
                 "https://api.github.com/repos/${CI_PROJECT_NAME}/commits/${COMMIT_SHA}/pulls" | \
-                jq '.[0].number'`
+                jq '.[0].number | select(.!=null)'`
             fi
 
             if [ -z "$CI_PULL_REQUEST" ]; then
               export CI_PULL_REQUEST=`curl -u "${GITHUB_OWNER}:${GITHUB_TOKEN}" \
                 -H "Accept: application/vnd.github.groot-preview+json" \
                 "https://api.github.com/repos/${CI_PROJECT_NAME}/commits/${COMMIT_SHA}/pulls" | \
-                jq '.[0].html_url'`
+                jq '.[0].html_url | select(.!=null)'`
             fi
           fi
 
@@ -299,19 +299,12 @@ jobs:
 
   visual_regression_test:
     container:
-      image: backstopjs/backstopjs:5.3.2
+      image: backstopjs/backstopjs:6.1.0
       options: --user root
     runs-on: ubuntu-latest
     if: ${{ github.ref != 'refs/heads/master' }}
     needs: [configure_env_vars, behat_test]
     steps:
-      - name: Update git version
-        run: |
-          echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main" >> /etc/apt/sources.list
-          apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
-          apt update -y
-          apt install -y git
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
