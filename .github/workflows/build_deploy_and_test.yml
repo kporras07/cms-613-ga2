@@ -71,7 +71,6 @@ jobs:
           export CI_PROJECT_USERNAME=${GITHUB_REPOSITORY_OWNER}
           /build-tools-ci/scripts/set-environment
           GITHUB_WORKFLOW_URL=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
-          echo "export PR_NUMBER='${PR_NUMBER}'" >> $BASH_ENV
           echo "export CI_BUILD_URL='${GITHUB_WORKFLOW_URL}'" >> $BASH_ENV
           echo "export CI_NODE_INDEX=0" >> $BASH_ENV
           echo "export CI_REPOSITORY_URL='https://github.com/${GITHUB_REPOSITORY}'" >> $BASH_ENV
